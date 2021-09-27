@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('images', image_name=['static/profile_picture.png']) }}">
+        <img alt="profile picture" src="{{ url_for('static', filename='profile_picture.png') }}"
+             width="70"
+             height="70">
+    </a>
+    <h1>Perfil de {{ current_user.email }}</h1>
+{% endblock %}
