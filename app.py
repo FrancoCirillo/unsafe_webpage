@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, login_required, \
     UserMixin, RoleMixin, roles_required
 from flask_security.utils import hash_password, logout_user
-from sqlalchemy.engine import Engine
+import sqlite3
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisisasecret'
@@ -91,11 +91,10 @@ def profile():
 def creacion_post():
     if request.method == 'POST':
         text = request.form.get('post_text_input')
-        engine: Engine = db.engine
         query = f"insert into post (text) values ('{text}')"
-        with engine.connect() as connection:
-            connection.execute(query)
-        db.session.commit()
+        conn = sqlite3.connect('db.sqlite3')
+        conn.executescript(query)
+        conn.commit()
     return render_template('creacion_post.html')
 
 
