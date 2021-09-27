@@ -25,15 +25,17 @@
                             <a href="{{ url_for('profile') }}" class="navbar-item">
                                 Perfil
                             </a>
-                            <a href="{{ url_for('creacion_post') }}" class="navbar-item">
-                                Crear Noticia
-                            </a>
                             <a href="{{ url_for('posts') }}" class="navbar-item">
                                 Posteos
                             </a>
-                            <a href="{{ url_for('register') }}" class="navbar-item">
-                                Agregar Usuario
-                            </a>
+                            {% if 'admin' in current_user.roles %}
+                                <a href="{{ url_for('creacion_post') }}" class="navbar-item">
+                                    Crear Noticia
+                                </a>
+                                <a href="{{ url_for('register') }}" class="navbar-item">
+                                    Agregar Usuario
+                                </a>
+                            {% endif %}
                         {% endif %}
                         {% if not current_user.is_authenticated %}
                             <a href="{{ url_for('security.login') }}" class="navbar-item">
