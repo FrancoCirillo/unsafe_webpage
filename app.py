@@ -1,4 +1,5 @@
 import os
+import json
 
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from flask_sqlalchemy import SQLAlchemy
@@ -51,6 +52,34 @@ class Title(db.Model):
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
+
+
+@app.before_first_request
+def setup():
+    # Recreate database each time for demo
+    db.drop_all()
+    db.create_all()
+    with open('config.json') as f:
+        config = json.load(f)
+    user_datastore.create_role(**config['roles']['admin'])
+    user_datastore.create_role(**config['roles']['user'])
+    db.session.commit()
+
+    users = config['users']
+    user_datastore.create_user(
+        email=users['admin']['email'],
+        password=hash_password(users['admin']['password']),
+        roles=['admin']
+    )
+    user_datastore.create_user(
+        email=users['basic_user']['email'],
+        password=hash_password(users['basic_user']['password']),
+        roles=['user']
+    )
+    db.session.add(Title(text='Portal de Noticias Empresarial'))
+    db.session.add(Post(text='El viernes 8 de Octubre es Feriado.'))
+    db.session.add(Post(text='El aguinaldo de diciembre 2021 se pagará en 27 cuotas a partir de julio 2022.'))
+    db.session.commit()
 
 
 @app.route('/register', methods=['POST', 'GET'])

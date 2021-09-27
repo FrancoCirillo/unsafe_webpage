@@ -1,0 +1,22 @@
+{
+  "roles": {
+    "admin": {
+      "name": "admin",
+      "description": "Rol de Administrador"
+    },
+    "user": {
+      "name": "user",
+      "description": "Rol de Administrador"
+    }
+  },
+  "users": {
+    "admin": {
+      "email": "admin@mi_empresa.com",
+      "password": "!_#$%&:;FGE_:35"
+    },
+    "basic_user": {
+      "email": "carlos@mi_empresa.com",
+      "password": "password1234"
+    }
+  }
+}
