@@ -148,3 +148,8 @@ def images():
 def logout():
     logout_user()
     return render_template('index.html')
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    return str(e), 500

